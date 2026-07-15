@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fingermile Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="src/popup.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo-group">
+        <div class="logo-icon"></div>
+        <h1 class="logo-title">Fingermile</h1>
+      </div>
+      <div class="user-status" id="header-user">
+        <!-- Rendered dynamically -->
+      </div>
+    </header>
+
+    <!-- Content Sections -->
+    <main class="app-main">
+      <!-- Loading State -->
+      <div id="loading-view" class="view-panel active">
+        <div class="spinner"></div>
+        <p class="loading-text">Initializing Dashboard...</p>
+      </div>
+
+      <!-- Logged Out View -->
+      <div id="logged-out-view" class="view-panel">
+        <div class="hero-section">
+          <div class="hero-illustration">
+            <div class="pulse-ring"></div>
+            <div class="pulse-ring delay-1"></div>
+            <div class="finger-icon"></div>
+          </div>
+          <h2 class="hero-heading">Measure Your Scrolled Distance</h2>
+          <p class="hero-subtext">See how many meters your finger travels daily across your favorite websites.</p>
+        </div>
+        <button id="signin-button" class="btn btn-primary">
+          <span>Sign In / Sign Up</span>
+          <svg class="btn-icon" viewBox="0 0 24 24" width="20" height="20">
+            <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-4H8v-2h3V7l5 5-5 5z"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Logged In View -->
+      <div id="logged-in-view" class="view-panel">
+        <!-- Main Daily Stat Card -->
+        <div class="stats-card">
+          <span class="stats-label">Today's Scroll Distance</span>
+          <div class="odometer-container">
+            <span id="stat-distance" class="stats-value">0.0</span>
+            <span class="stats-unit">meters</span>
+          </div>
+          <div class="stats-meta">
+            <div class="meta-item">
+              <svg viewBox="0 0 24 24" class="meta-icon">
+                <path fill="currentColor" d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+              </svg>
+              <span id="stat-duration">0 min</span>
+            </div>
+            <div class="meta-divider"></div>
+            <div class="meta-item">
+              <span class="badge badge-success">Tracking Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Site Breakdown -->
+        <section class="breakdown-section">
+          <h3 class="section-title">Website Leaderboard</h3>
+          <div id="site-list" class="site-list">
+            <!-- Dynamically populated list of site stats -->
+          </div>
+        </section>
+
+        <!-- Footer Actions -->
+        <footer class="view-footer">
+          <button id="signout-button" class="btn btn-secondary btn-sm">
+            Sign Out
+          </button>
+        </footer>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="src/popup.ts"></script>
+</body>
+</html>

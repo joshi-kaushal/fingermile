@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Fingermile",
+  "version": "1.0.0",
+  "description": "Tracks how far your finger travels scrolling across websites.",
+  "permissions": [
+    "storage",
+    "identity"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "action": {
+    "default_popup": "index.html"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsWSmhX+7IUxFLhxVPVQf9FdM9+m0zEElrNSg40JtBFcbLQyJu7LnQVdvC40dDtHSxFGSao9q8GlILSSIFxK8UHk6+Gxcm4nKGNgTBxCps5ZbMvOOrUwUOYfxGjCPd5L56xCD+Wo+WnpS0e8yNs6KDYzo1vnlbbLdeo61eFl4hSOc4czt1hPY+tQjpwcRA/QV0b6L1uugClE2AxqQYmsQ3ZBxCAlInuRglJr6HunVHgEluRo1R8Xiqfn8YJvWP9haZm49bI4glszkYSypqhgQ82AJ3/CkIF1YehWkKQLtCB0bJeaE3PZbZFHadBzPucQ4F+R/s/pJFN5YHre4KWgKgwIDAQAB"
+}
