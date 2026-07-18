@@ -3,12 +3,14 @@ import { createClerkClient } from '@clerk/chrome-extension/client';
 // Retrieve backend and publishable keys from build-time env or use fallbacks
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY || '';
+const SYNC_HOST = import.meta.env.VITE_CLERK_SYNC_HOST || '';
 
 // Initialize Clerk for background environment asynchronously to avoid top-level await in service workers
 const clerkPromise = (async () => {
   const instance = await createClerkClient({
     publishableKey: CLERK_PUBLISHABLE_KEY,
     background: true,
+    syncHost: SYNC_HOST,
   });
   await instance.load({
     allowedRedirectProtocols: ['chrome-extension:'],
