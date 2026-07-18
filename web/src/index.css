@@ -1,0 +1,68 @@
+:root {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  color: #111827;
+  background: #f9fafb;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+}
+
+a {
+  color: #4f46e5;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.app-shell {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.brand {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #6b7280;
+  margin-bottom: 32px;
+}
+
+.card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.auth-links {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.signed-in-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.auth-page {
+  display: flex;
+  justify-content: center;
+  padding: 48px 16px;
+}
