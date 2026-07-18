@@ -1,18 +1,13 @@
-version: '3.8'
-
 services:
-  db:
-    image: postgres:16-alpine
-    container_name: fingermile-db
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: fingermile
+  fingermile:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.compose
+    container_name: fingermile
+    restart: unless-stopped
     ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-
-volumes:
-  postgres_data:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@127.0.0.1:5432/fingermile
+      CLERK_JWKS_URL: https://relaxed-fox-20.clerk.accounts.dev/.well-known/jwks.json
+      BYPASS_AUTH: "false"
