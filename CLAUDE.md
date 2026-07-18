@@ -8,10 +8,11 @@ A multi-user Chrome extension that tracks how far your finger has travelled scro
 ## Architecture
 
 ### Components
-- **Chrome Extension** — content script + service worker + popup
+- **Chrome Extension** — content script + service worker + popup (React)
+- **Web App** — Vite + React sync-host for Clerk auth (Google, email+password)
 - **Backend** — FastAPI + PostgreSQL, deployed on Railway
-- **Auth** — Clerk (Google OAuth via `launchWebAuthFlow`)
-- **Dashboard** — (Phase 2)
+- **Auth** — Clerk Sync Host (sign in on web app, session syncs to extension)
+- **Dashboard** — extension popup stats; full web dashboard (Phase 2)
 
 ---
 
@@ -152,14 +153,21 @@ const site = window.location.hostname.replace(/^www\./, '');
 
 ---
 
-## Auth Flow (Clerk + Extension)
+## Auth Flow (Clerk Sync Host)
 
-1. Extension calls `chrome.identity.launchWebAuthFlow` → Clerk hosted OAuth UI
-2. User signs in via Google or Microsoft
-3. Clerk returns JWT
-4. Extension stores JWT, sends as `Authorization: Bearer <jwt>` on all requests
-5. Backend verifies JWT via Clerk SDK, extracts `clerk_user_id`
-6. Backend upserts `users` table on first call
+OAuth does not work inside the extension popup. Users authenticate on the web app; the extension syncs that session.
+
+1. User clicks **Sign In on Web** in the extension popup → new tab opens `{SYNC_HOST}/sign-in`
+2. User signs in on the web app via Google or email+password (Clerk `<SignIn>` / `<SignUp>`)
+3. Clerk session cookies are set on the sync host origin
+4. Extension `ClerkProvider` / background `createClerkClient({ syncHost })` syncs the session
+5. Extension calls `session.getToken()` and sends `Authorization: Bearer <jwt>` to FastAPI
+6. Backend verifies JWT via Clerk JWKS, extracts `clerk_user_id`, upserts `users` on first call
+
+**Clerk setup required:**
+- Enable Native API in Clerk Dashboard
+- Stable extension CRX ID via manifest `key` → register `chrome-extension://<id>` in `allowed_origins`
+- Extension manifest: `cookies` permission + host permissions for sync host and Clerk Frontend API
 
 ---
 
