@@ -1,4 +1,5 @@
 import asyncio
+import logging
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -9,10 +10,16 @@ from app.db import init_db
 from app.routes import router
 from app.limiter import limiter
 
+logger = logging.getLogger("uvicorn.error")
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Initialize the database and create tables if they do not exist
-    await init_db()
+    try:
+        await init_db()
+        logger.info("Database initialized successfully")
+    except Exception as e:
+        logger.error("Database initialization failed: %s", e, exc_info=True)
     yield
 
 app = FastAPI(
