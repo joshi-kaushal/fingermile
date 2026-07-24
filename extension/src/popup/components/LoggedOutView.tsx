@@ -1,4 +1,4 @@
-const SYNC_HOST = import.meta.env.VITE_CLERK_SYNC_HOST;
+const SYNC_HOST = import.meta.env.VITE_CLERK_SYNC_HOST || '';
 
 export function LoggedOutView() {
   const openWebSignIn = () => {
