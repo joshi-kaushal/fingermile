@@ -3,13 +3,17 @@
   "name": "Fingermile",
   "version": "1.0.0",
   "description": "Tracks how far your finger travels scrolling across websites.",
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
   "permissions": [
     "storage",
-    "identity"
+    "cookies"
   ],
-  "host_permissions": [
-    "<all_urls>"
-  ],
+  "host_permissions": [],
   "background": {
     "service_worker": "background.js",
     "type": "module"
@@ -26,7 +30,13 @@
     }
   ],
   "action": {
-    "default_popup": "index.html"
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "32": "icon32.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
   },
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsWSmhX+7IUxFLhxVPVQf9FdM9+m0zEElrNSg40JtBFcbLQyJu7LnQVdvC40dDtHSxFGSao9q8GlILSSIFxK8UHk6+Gxcm4nKGNgTBxCps5ZbMvOOrUwUOYfxGjCPd5L56xCD+Wo+WnpS0e8yNs6KDYzo1vnlbbLdeo61eFl4hSOc4czt1hPY+tQjpwcRA/QV0b6L1uugClE2AxqQYmsQ3ZBxCAlInuRglJr6HunVHgEluRo1R8Xiqfn8YJvWP9haZm49bI4glszkYSypqhgQ82AJ3/CkIF1YehWkKQLtCB0bJeaE3PZbZFHadBzPucQ4F+R/s/pJFN5YHre4KWgKgwIDAQAB"
 }
