@@ -9,10 +9,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@clerk/chrome-extension": "^3.1.31"
+    "@clerk/chrome-extension": "^3.1.31",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.0"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.268",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
     "typescript": "^5.4.5",
     "vite": "^5.2.11"
   }
