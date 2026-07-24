@@ -1,6 +1,7 @@
-import { Show, UserButton, useAuth } from '@clerk/chrome-extension';
+import { Show, useAuth } from '@clerk/chrome-extension';
 import { Dashboard } from '../components/Dashboard';
 import { LoggedOutView } from '../components/LoggedOutView';
+import { UserMenu } from '../components/UserMenu';
 
 export function HomePage() {
   const { isLoaded } = useAuth();
@@ -33,7 +34,7 @@ export function HomePage() {
         </div>
         <div className="user-status">
           <Show when="signed-in">
-            <UserButton />
+            <UserMenu />
           </Show>
         </div>
       </header>

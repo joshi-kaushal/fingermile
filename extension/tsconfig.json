@@ -5,20 +5,16 @@
     "module": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "skipLibCheck": true,
-
-    /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-
-    /* Linting */
+    "jsx": "react-jsx",
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-
     "types": ["chrome", "vite/client"]
   },
   "include": ["src"]

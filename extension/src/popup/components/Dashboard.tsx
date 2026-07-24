@@ -98,6 +98,8 @@ export function Dashboard() {
         }
 
         leaderboardList.sort((a, b) => b.distance_m - a.distance_m);
+        // Keep only top 5 for the popup
+        leaderboardList.length = Math.min(leaderboardList.length, 5);
 
         if (!cancelled) {
           setDistance(roundToOneDecimal(grandTotalDistanceM).toFixed(1));
@@ -145,7 +147,7 @@ export function Dashboard() {
       </div>
 
       <section className="breakdown-section">
-        <h3 className="section-title">Website Leaderboard</h3>
+        <h3 className="section-title">Top Sites</h3>
         <div className="site-list">
           {!loading && siteListHtml.length === 0 && (
             <div className="empty-state">
