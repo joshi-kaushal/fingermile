@@ -1,18 +1,21 @@
 import uuid
 from datetime import date as datetime_date
 from typing import Optional, List, Dict
-from fastapi import APIRouter, Depends, Query, HTTPException, status
-from sqlmodel import select, func
+from fastapi import APIRouter, Depends, Query, HTTPException, status, Request
+from sqlmodel import select, func, delete
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 from app.db import get_session
 from app.auth import get_current_user_id
 from app.models import User, ScrollSession, ScrollSessionCreate, MetricsResponse, DailyMetric
+from app.limiter import limiter
 
 router = APIRouter(prefix="/v1")
 
 @router.post("/scroll", status_code=status.HTTP_201_CREATED)
+@limiter.limit("30/minute")
 async def upsert_scroll_session(
+    request: Request,
     payload: ScrollSessionCreate,
     clerk_user_id: str = Depends(get_current_user_id),
     session: AsyncSession = Depends(get_session)
@@ -61,6 +64,7 @@ async def get_metrics(
     from_date: datetime_date = Query(..., alias="from"),
     to_date: datetime_date = Query(..., alias="to"),
     site: Optional[str] = Query(None),
+    limit: Optional[int] = Query(None, ge=1, le=100, description="Limit results to top N sites by distance"),
     clerk_user_id: str = Depends(get_current_user_id),
     session: AsyncSession = Depends(get_session)
 ):
@@ -135,6 +139,12 @@ async def get_metrics(
             "duration_min": dur_min
         })
         
+    # Sort sites by total distance descending, optionally limit to top N
+    sorted_sites = sorted(data.items(), key=lambda x: sum(d["distance_m"] for d in x[1]), reverse=True)
+    if limit and limit > 0:
+        sorted_sites = sorted_sites[:limit]
+    data = dict(sorted_sites)
+        
     response_payload = {
         "from": from_date,
         "to": to_date,
@@ -146,3 +156,24 @@ async def get_metrics(
     }
     
     return response_payload
+
+
+@router.delete("/data", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_all_data(
+    clerk_user_id: str = Depends(get_current_user_id),
+    session: AsyncSession = Depends(get_session)
+):
+    """Hard-delete all scroll sessions and the user record for the authenticated user."""
+    user_stmt = select(User).where(User.clerk_user_id == clerk_user_id)
+    user_result = await session.execute(user_stmt)
+    user = user_result.scalar_one_or_none()
+
+    if user:
+        # Delete all scroll sessions for this user
+        delete_sessions = delete(ScrollSession).where(ScrollSession.user_id == user.id)
+        await session.execute(delete_sessions)
+        # Delete the user record itself (hard delete — no trace)
+        await session.delete(user)
+        await session.commit()
+    
+    return None

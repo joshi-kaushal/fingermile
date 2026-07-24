@@ -2,9 +2,12 @@ import asyncio
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
 
 from app.db import init_db
 from app.routes import router
+from app.limiter import limiter
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -18,6 +21,10 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan
 )
+
+# Attach rate limiter
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # CORS configurations
 # Allow requests from the local development server and Chrome Extensions
