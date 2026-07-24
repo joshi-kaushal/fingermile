@@ -1,68 +1,52 @@
-:root {
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  line-height: 1.5;
-  color: #111827;
-  background: #f9fafb;
-}
+@import "tailwindcss";
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+@theme {
+  --font-family-outfit: 'Outfit', system-ui, -apple-system, sans-serif;
+
+  --color-bg-primary: #030712;
+  --color-bg-surface: rgba(17, 24, 39, 0.7);
+  --color-bg-surface-hover: rgba(31, 41, 55, 0.8);
+  --color-border-subtle: rgba(255, 255, 255, 0.06);
+  --color-border-glow: rgba(99, 102, 241, 0.15);
+
+  --color-text-primary: #f9fafb;
+  --color-text-secondary: #9ca3af;
+  --color-text-muted: #6b7280;
+
+  --color-accent: #6366f1;
+  --color-accent-light: #8b5cf6;
+  --color-accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+
+  --color-success: #10b981;
+  --color-success-glow: rgba(16, 185, 129, 0.2);
 }
 
 body {
-  min-height: 100vh;
+  font-family: var(--font-family-outfit);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
 }
 
-a {
-  color: #4f46e5;
-  text-decoration: none;
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-subtle);
+  border-radius: 3px;
 }
 
-a:hover {
-  text-decoration: underline;
-}
-
-.app-shell {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 48px 24px;
-}
-
-.brand {
-  font-size: 1.75rem;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.subtitle {
-  color: #6b7280;
-  margin-bottom: 32px;
-}
-
-.card {
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-}
-
-.auth-links {
-  display: flex;
-  gap: 16px;
-  margin-top: 16px;
-}
-
-.signed-in-card {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.auth-page {
-  display: flex;
-  justify-content: center;
-  padding: 48px 16px;
+/* Clerk component overrides for dark theme */
+.cl-signIn-root,
+.cl-signUp-root {
+  --clerk-color-background: rgba(17, 24, 39, 0.8) !important;
+  --clerk-color-text: #f9fafb !important;
+  --clerk-color-input-background: rgba(255, 255, 255, 0.05) !important;
+  --clerk-color-input-text: #f9fafb !important;
+  --clerk-color-primary: #6366f1 !important;
+  --clerk-color-foreground: #f9fafb !important;
+  --clerk-color-neutral: #9ca3af !important;
 }

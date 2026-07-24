@@ -17,7 +17,9 @@ export function RootLayout() {
       routerReplace={(to) => navigate(to, { replace: true })}
       afterSignOutUrl="/"
     >
-      <Outlet />
+      <div className="min-h-screen bg-[#030712] text-[#f9fafb] font-outfit">
+        <Outlet />
+      </div>
     </ClerkProvider>
   );
 }
