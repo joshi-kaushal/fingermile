@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '@clerk/clerk-react';
 import { useState } from 'react';
+import { Header } from '../components/Header';
+import { Footer } from '../components/Footer';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 
@@ -38,58 +40,37 @@ export function PrivacyPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#030712] relative overflow-hidden">
-      <div className="fixed top-0 right-0 w-[600px] h-[600px] rounded-full bg-indigo-500/5 blur-3xl pointer-events-none" />
-      <div className="fixed bottom-0 left-0 w-[500px] h-[500px] rounded-full bg-purple-500/5 blur-3xl pointer-events-none" />
+    <div className="min-h-screen bg-white flex flex-col">
+      <Header />
 
-      <div className="max-w-3xl mx-auto px-4 py-12 relative z-10">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-10">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center">
-              <div className="w-4 h-4 rounded-full bg-[#030712]" />
-            </div>
-            <span className="text-lg font-bold bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Fingermile
-            </span>
-          </Link>
-          <Link to="/" className="text-xs text-[#6b7280] hover:text-[#9ca3af] transition-colors">
-            Back to Home
-          </Link>
-        </div>
+      <main className="flex-1 max-w-3xl mx-auto px-4 sm:px-6 py-12 w-full">
+        <h1 className="text-2xl font-bold text-[#001D56] mb-8">Privacy &amp; How It Works</h1>
 
-        <div className="space-y-10">
-          {/* Section: How Tracking Works */}
-          <section className="backdrop-blur-sm bg-[rgba(17,24,39,0.7)] border border-[rgba(255,255,255,0.06)] rounded-2xl p-8 shadow-xl">
-            <h1 className="text-2xl font-bold mb-6 bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-              How Tracking Works
-            </h1>
+        <div className="space-y-8">
+          {/* How Tracking Works */}
+          <section className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl p-6 shadow-sm">
+            <h2 className="text-lg font-bold text-[#001D56] mb-4">How Tracking Works</h2>
 
-            <div className="space-y-4 text-sm text-[#9ca3af] leading-relaxed">
+            <div className="space-y-3 text-sm text-[#64748B] leading-relaxed">
               <p>
                 Fingermile is a Chrome extension that measures how far your finger travels
-                while scrolling on websites. It is <strong className="text-[#f9fafb]">not</strong> a keylogger,
+                while scrolling on websites. It is <strong className="text-[#1E293B]">not</strong> a keylogger,
                 screen recorder, or session replay tool.
               </p>
 
-              <h2 className="text-base font-semibold text-[#f9fafb] mt-6 mb-2">The Algorithm</h2>
-              <ol className="list-decimal list-inside space-y-2 pl-4">
+              <h3 className="text-base font-semibold text-[#1E293B] mt-5 mb-2">The Algorithm</h3>
+              <ol className="list-decimal list-inside space-y-1.5 pl-4">
                 <li>
-                  The extension listens for <code className="text-indigo-300 bg-indigo-500/10 px-1.5 py-0.5 rounded text-xs">wheel</code> events as you scroll.
-                  It reads the <code className="text-indigo-300 bg-indigo-500/10 px-1.5 py-0.5 rounded text-xs">deltaY</code> value — the number of pixels the page moved.
+                  The extension listens for <code className="text-[#001D56] bg-[#001D56]/5 px-1.5 py-0.5 rounded text-xs font-mono">wheel</code> events as you scroll.
+                  It reads the <code className="text-[#001D56] bg-[#001D56]/5 px-1.5 py-0.5 rounded text-xs font-mono">deltaY</code> value — the number of pixels the page moved.
                 </li>
-                <li>
-                  Events in <em>line</em> mode are converted to pixels (line × 16).
-                  Events in <em>page</em> mode are converted using the viewport height.
-                </li>
+                <li>Events in <em>line</em> mode are converted to pixels (line &times; 16).</li>
+                <li>Events in <em>page</em> mode are converted using the viewport height.</li>
                 <li>
                   Pixels are converted to centimeters using your screen&apos;s DPI
-                  (pixels per inch ÷ 2.54) and device pixel ratio.
+                  (pixels per inch &divide; 2.54) and device pixel ratio.
                 </li>
-                <li>
-                  The distance is accumulated in the content script, then flushed to the
-                  extension&apos;s background service worker every 2 seconds.
-                </li>
+                <li>The distance is accumulated in the content script, then flushed to the extension&apos;s background service worker every 2 seconds.</li>
                 <li>
                   Every 5 minutes, the data is synced to our server via an authenticated
                   API call. Only the site hostname (e.g., &quot;youtube.com&quot;), the cumulative
@@ -97,21 +78,21 @@ export function PrivacyPage() {
                 </li>
               </ol>
 
-              <h2 className="text-base font-semibold text-[#f9fafb] mt-6 mb-2">What We Do NOT Collect</h2>
-              <ul className="list-disc list-inside space-y-1 pl-4 text-[#10b981]">
-                <li><span className="text-[#9ca3af]">No page content, HTML, or DOM data</span></li>
-                <li><span className="text-[#9ca3af]">No keystrokes, mouse clicks, or form input</span></li>
-                <li><span className="text-[#9ca3af]">No screenshots or screen recordings</span></li>
-                <li><span className="text-[#9ca3af]">No network requests or page URLs (only hostnames)</span></li>
-                <li><span className="text-[#9ca3af]">No personal browsing history beyond site names</span></li>
+              <h3 className="text-base font-semibold text-[#1E293B] mt-5 mb-2">What We Do NOT Collect</h3>
+              <ul className="list-disc list-inside space-y-1 pl-4">
+                <li><span className="text-[#64748B]">No page content, HTML, or DOM data</span></li>
+                <li><span className="text-[#64748B]">No keystrokes, mouse clicks, or form input</span></li>
+                <li><span className="text-[#64748B]">No screenshots or screen recordings</span></li>
+                <li><span className="text-[#64748B]">No network requests or page URLs (only hostnames)</span></li>
+                <li><span className="text-[#64748B]">No personal browsing history beyond site names</span></li>
               </ul>
             </div>
           </section>
 
-          {/* Section: Data Storage */}
-          <section className="backdrop-blur-sm bg-[rgba(17,24,39,0.7)] border border-[rgba(255,255,255,0.06)] rounded-2xl p-8 shadow-xl">
-            <h2 className="text-lg font-bold mb-4 text-[#f9fafb]">Data Storage</h2>
-            <div className="space-y-3 text-sm text-[#9ca3af] leading-relaxed">
+          {/* Data Storage */}
+          <section className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl p-6 shadow-sm">
+            <h2 className="text-lg font-bold text-[#001D56] mb-4">Data Storage</h2>
+            <div className="space-y-3 text-sm text-[#64748B] leading-relaxed">
               <p>
                 For each scroll session, we store: the site hostname, the total scroll distance
                 in centimeters, the duration spent scrolling (in seconds), and the date.
@@ -119,7 +100,7 @@ export function PrivacyPage() {
                 email or personal information.
               </p>
               <p>
-                All distance calculation happens <strong className="text-[#f9fafb]">entirely in your browser</strong>.
+                All distance calculation happens <strong className="text-[#1E293B]">entirely in your browser</strong>.
                 Raw pixel data never leaves your device — only the final converted
                 centimeter value is sent to our server.
               </p>
@@ -130,52 +111,56 @@ export function PrivacyPage() {
             </div>
           </section>
 
-          {/* Section: Privacy Policy */}
-          <section className="backdrop-blur-sm bg-[rgba(17,24,39,0.7)] border border-[rgba(255,255,255,0.06)] rounded-2xl p-8 shadow-xl">
-            <h2 className="text-lg font-bold mb-4 text-[#f9fafb]">Privacy Policy</h2>
-            <div className="space-y-3 text-sm text-[#9ca3af] leading-relaxed">
-              <p><strong className="text-[#f9fafb]">Data Controller:</strong> Fingermile</p>
-              <p><strong className="text-[#f9fafb]">Data Collected:</strong> Scroll distance (cm), time spent scrolling (seconds), site hostname, date, and a Clerk account identifier.</p>
-              <p><strong className="text-[#f9fafb]">Purpose:</strong> Personal analytics — showing you how much you scroll across different websites.</p>
-              <p><strong className="text-[#f9fafb]">Data Retention:</strong> Data is stored until you choose to delete it. You can delete all your data at any time.</p>
-              <p><strong className="text-[#f9fafb]">Third Parties:</strong> We use Clerk for authentication. Clerk stores your email address and handles sign-in. No scroll data is shared with Clerk.</p>
-              <p><strong className="text-[#f9fafb]">Data Deletion:</strong> You can permanently erase all your data using the button below. This is a hard delete — no backups or traces remain.</p>
-              <p><strong className="text-[#f9fafb]">Contact:</strong> For questions about this policy, open an issue on our GitHub repository.</p>
+          {/* Privacy Policy */}
+          <section className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl p-6 shadow-sm">
+            <h2 className="text-lg font-bold text-[#001D56] mb-4">Privacy Policy</h2>
+            <div className="space-y-3 text-sm text-[#64748B] leading-relaxed">
+              <p><strong className="text-[#1E293B]">Data Controller:</strong> Fingermile</p>
+              <p><strong className="text-[#1E293B]">Data Collected:</strong> Scroll distance (cm), time spent scrolling (seconds), site hostname, date, and a Clerk account identifier.</p>
+              <p><strong className="text-[#1E293B]">Purpose:</strong> Personal analytics — showing you how much you scroll across different websites.</p>
+              <p><strong className="text-[#1E293B]">Data Retention:</strong> Data is stored until you choose to delete it. You can delete all your data at any time.</p>
+              <p><strong className="text-[#1E293B]">Third Parties:</strong> We use Clerk for authentication. Clerk stores your email address and handles sign-in. No scroll data is shared with Clerk.</p>
+              <p><strong className="text-[#1E293B]">Data Deletion:</strong> You can permanently erase all your data using the button below. This is a hard delete — no backups or traces remain.</p>
+              <p>
+                <strong className="text-[#1E293B]">Contact:</strong> For questions about this policy,{' '}
+                <Link to="/contact" className="text-[#F58538] hover:text-[#e0742e] transition-colors no-underline font-medium">
+                  contact us
+                </Link>{' '}
+                or{' '}
+                <a href="https://github.com/joshi-kaushal/fingermile" target="_blank" rel="noopener noreferrer" className="text-[#F58538] hover:text-[#e0742e] transition-colors no-underline font-medium">
+                  open an issue on GitHub
+                </a>.
+              </p>
             </div>
 
             {/* Delete button */}
             {isSignedIn && !deleteDone && (
-              <div className="mt-6 pt-6 border-t border-[rgba(255,255,255,0.06)]">
+              <div className="mt-6 pt-6 border-t border-[#E2E8F0]">
                 <button
                   type="button"
                   onClick={handleDelete}
                   disabled={deleting}
-                  className="px-5 py-2.5 rounded-xl text-xs font-semibold bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-5 py-2.5 rounded-lg text-xs font-semibold bg-[#DC2626]/10 border border-[#DC2626]/20 text-[#DC2626] hover:bg-[#DC2626]/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                 >
                   {deleting ? 'Deleting...' : 'Delete All My Data'}
                 </button>
                 {deleteError && (
-                  <p className="mt-2 text-xs text-red-400">{deleteError}</p>
+                  <p className="mt-2 text-xs text-[#DC2626]">{deleteError}</p>
                 )}
               </div>
             )}
             {deleteDone && (
-              <div className="mt-6 pt-6 border-t border-[rgba(255,255,255,0.06)]">
-                <p className="text-sm text-[#10b981]">
+              <div className="mt-6 pt-6 border-t border-[#E2E8F0]">
+                <p className="text-sm text-[#16A34A]">
                   All your data has been permanently deleted.
                 </p>
               </div>
             )}
           </section>
         </div>
+      </main>
 
-        {/* Footer */}
-        <div className="text-center mt-10 text-xs text-[#6b7280]">
-          <Link to="/" className="hover:text-[#9ca3af] transition-colors">
-            Back to Home
-          </Link>
-        </div>
-      </div>
+      <Footer />
     </div>
   );
 }

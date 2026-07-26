@@ -1,30 +1,43 @@
 @import "tailwindcss";
 
 @theme {
-  --font-family-outfit: 'Outfit', system-ui, -apple-system, sans-serif;
+  --font-family-inter: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
-  --color-bg-primary: #030712;
-  --color-bg-surface: rgba(17, 24, 39, 0.7);
-  --color-bg-surface-hover: rgba(31, 41, 55, 0.8);
-  --color-border-subtle: rgba(255, 255, 255, 0.06);
-  --color-border-glow: rgba(99, 102, 241, 0.15);
+  /* Brand */
+  --color-primary: #001D56;
+  --color-secondary: #F58538;
 
-  --color-text-primary: #f9fafb;
-  --color-text-secondary: #9ca3af;
-  --color-text-muted: #6b7280;
+  /* Surfaces */
+  --color-bg: #FFFFFF;
+  --color-surface: #F8FAFC;
+  --color-surface-hover: #F1F5F9;
+  --color-surface-active: #FFF7ED;
 
-  --color-accent: #6366f1;
-  --color-accent-light: #8b5cf6;
-  --color-accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+  /* Text */
+  --color-text: #1E293B;
+  --color-text-secondary: #64748B;
+  --color-text-tertiary: #94A3B8;
+  --color-text-inverse: #FFFFFF;
 
-  --color-success: #10b981;
-  --color-success-glow: rgba(16, 185, 129, 0.2);
+  /* Borders */
+  --color-border: #E2E8F0;
+  --color-border-focus: #F58538;
+
+  /* Semantic */
+  --color-success: #16A34A;
+  --color-success-bg: #F0FDF4;
+  --color-error: #DC2626;
+  --color-error-bg: #FEF2F2;
+  --color-info: #0284C7;
+  --color-info-bg: #F0F9FF;
 }
 
 body {
-  font-family: var(--font-family-outfit);
-  background-color: var(--color-bg-primary);
-  color: var(--color-text-primary);
+  font-family: var(--font-family-inter);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Scrollbar styling */
@@ -35,18 +48,35 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border-subtle);
+  background: var(--color-border);
   border-radius: 3px;
 }
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-tertiary);
+}
 
-/* Clerk component overrides for dark theme */
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Selection */
+::selection {
+  background: rgba(245, 133, 56, 0.2);
+  color: var(--color-primary);
+}
+
+/* Clerk component overrides for light theme */
 .cl-signIn-root,
 .cl-signUp-root {
-  --clerk-color-background: rgba(17, 24, 39, 0.8) !important;
-  --clerk-color-text: #f9fafb !important;
-  --clerk-color-input-background: rgba(255, 255, 255, 0.05) !important;
-  --clerk-color-input-text: #f9fafb !important;
-  --clerk-color-primary: #6366f1 !important;
-  --clerk-color-foreground: #f9fafb !important;
-  --clerk-color-neutral: #9ca3af !important;
+  --clerk-color-background: #FFFFFF !important;
+  --clerk-color-text: #1E293B !important;
+  --clerk-color-input-background: #F8FAFC !important;
+  --clerk-color-input-text: #1E293B !important;
+  --clerk-color-primary: #001D56 !important;
+  --clerk-color-foreground: #1E293B !important;
+  --clerk-color-neutral: #64748B !important;
+  --clerk-colorInput: #E2E8F0 !important;
 }
