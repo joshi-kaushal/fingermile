@@ -98,7 +98,6 @@ export function Dashboard() {
         }
 
         leaderboardList.sort((a, b) => b.distance_m - a.distance_m);
-        // Keep only top 5 for the popup
         leaderboardList.length = Math.min(leaderboardList.length, 5);
 
         if (!cancelled) {
@@ -124,7 +123,7 @@ export function Dashboard() {
   return (
     <div className="view-panel active">
       <div className="stats-card">
-        <span className="stats-label">Today&apos;s Scroll Distance</span>
+        <span className="stats-label">Scroll Distance (7 days)</span>
         <div className="odometer-container">
           <span className="stats-value">{loading ? '—' : distance}</span>
           <span className="stats-unit">meters</span>
@@ -152,7 +151,7 @@ export function Dashboard() {
           {!loading && siteListHtml.length === 0 && (
             <div className="empty-state">
               <p>No scroll history recorded yet.</p>
-              <p style={{ marginTop: '4px', fontSize: '10px', color: 'var(--text-muted)' }}>
+              <p style={{ marginTop: '4px', fontSize: '10px', color: 'var(--color-text-tertiary)' }}>
                 Start scrolling on any page to begin!
               </p>
             </div>
@@ -178,6 +177,16 @@ export function Dashboard() {
           })}
         </div>
       </section>
+
+      <div className="view-footer">
+        <a href="https://github.com/joshi-kaushal/fingermile" target="_blank" rel="noopener noreferrer">
+          GitHub
+        </a>
+        <span style={{ color: 'var(--color-border)', fontSize: '10px' }}>|</span>
+        <a href="https://fingermile-production.up.railway.app/privacy" target="_blank" rel="noopener noreferrer">
+          Privacy
+        </a>
+      </div>
     </div>
   );
 }
