@@ -7,7 +7,7 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 
 from app.db import get_session
 from app.auth import get_current_user_id
-from app.models import User, ScrollSession, ScrollSessionCreate, MetricsResponse, DailyMetric
+from app.models import User, ScrollSession, ScrollSessionCreate, MetricsResponse, DailyMetric, ContactMessage
 from app.limiter import limiter
 
 router = APIRouter(prefix="/v1")
@@ -175,5 +175,23 @@ async def delete_all_data(
         # Delete the user record itself (hard delete — no trace)
         await session.delete(user)
         await session.commit()
-    
+
+    return None
+
+
+@router.post("/contact", status_code=status.HTTP_201_CREATED)
+@limiter.limit("5/minute")
+async def submit_contact(
+    request: Request,
+    payload: ContactMessage,
+):
+    """Accept a contact form submission and log it."""
+    import logging
+    logger = logging.getLogger("uvicorn.error")
+    logger.info(
+        "[Contact] name=%s email=%s message=%s",
+        payload.name,
+        payload.email,
+        payload.message[:200],
+    )
     return None

@@ -53,3 +53,9 @@ class MetricsResponse(SQLModel):
     to_date: datetime_date = Field(serialization_alias="to", validation_alias="to")
     data: Dict[str, List[DailyMetric]]
     totals: Dict[str, float]
+
+
+class ContactMessage(SQLModel):
+    name: str
+    email: str
+    message: str
